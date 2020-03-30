@@ -12,4 +12,15 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
   get signup_path
   assert_select "title",full_title("Sign up")
  end
+
+  def setup
+  @user = users(:michael)
+  end
+
+  test "layout index links log" do
+    log_in_as(@user)
+    get root_path
+    assert_template "static_pages/home"
+    assert_select "a[href=?]",users_path
+  end
 end
